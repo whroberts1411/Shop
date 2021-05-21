@@ -5,7 +5,7 @@
 __pycache__
 media
 local_settings.py
-# db.sqlite3
+db.sqlite3
 Shop_Database.vsd
 
 # Backup files #
