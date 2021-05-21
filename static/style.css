@@ -1,0 +1,21 @@
+body {
+    background-color: ghostwhite;
+}
+/* Constrain the maximum size of the product images */
+.cardimg {
+    max-height: 250px;
+    max-width: 250px;
+}
+/* Set menu link items to text.info colour */
+nav .navbar-nav li a{
+    color: #5bc0de !important;
+    }
+/* Set menu link item hover to text.warning colour */
+nav .navbar-nav li a:hover{
+    color:#f0ad4e  !important;
+    }
+
+.mylogo {
+    max-height: 30px;
+    max-width: 30px;
+}

@@ -1,0 +1,57 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    Checkout
+{% endblock title %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <br><br>
+    <h2 class="text-center text-info">Thank you{{ name }}</h2>
+
+    <br><br>
+    <h4 class="text-center text-info">Your order was submitted successfully</h4>
+
+    <br><br><br>
+    <div class="row-hl d-flex justify-content-center">
+        <a href="{% url 'index' %}" class="btn btn-success clear">Back to Shop</a>
+    </div>
+
+    <br><br>
+    <div class="mb-3">
+        <h6 class="text-center">
+            Your order history with us, including your current order (click an Order Ref to see full details of the order) :
+        </h6>
+    </div>
+    <table class="table table-sm ">
+        <thead class="bg-secondary text-warning">
+            <tr>
+                <td>Order Ref</td>
+                <td>Total Cost</td>
+                <td>No. of Items</td>
+                <td>Order Date</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in history %}
+            <tr>
+                <th scope="row">
+                    <a href="/history/{{ item.order__id }}"> {{ item.order__id }}</a>
+                </th>
+                <td> {{ item.cost__sum }}</td>
+                <td>{{ item.quantity__sum }}</td>
+                <td>{{ item.order__orderdate__max }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+
+{% endblock content %}

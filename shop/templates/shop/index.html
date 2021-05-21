@@ -1,0 +1,81 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    Shopfront
+{% endblock title %}
+
+{% load static %}
+
+{% block content %}
+    <h2 class="my-3 text-center text-secondary">Hi {{ user.username|title }}, welcome to our shop</h2>
+    <div class="row">
+    {% for product in product_objects %}
+        <div class="col-md-3 col-6 d-flex align-self-stretch">
+            <div class="card text-center mb-4 border-warning">
+                <img src="{{ product.image }}" class="card-img-top p-3 img-fluid cardimg">
+
+                <div class="card-header text-warning bg-secondary">
+                    <h5 id="nm{{ product.id }}">{{ product.title}}</h5>
+                </div>
+
+                <div class="card-body d-flex flex-column text-secondary">
+                    <i>rrp £{{ product.price }}</i>
+
+                    <span class="font-weight-bold text-success">
+                        Our price £
+                        <span id="price{{ product.id }}">
+                            {{ product.discount_price }}
+                        </span>
+                    </span>
+                </div>
+
+                <div class="card-footer">
+                    <a href="/{{ product.id }}" class="btn btn-outline-info btn-sm mb-2">
+                        <i class="fas fa-eye"></i> Show Details</a>
+                    <button id ="{{ product.id }}"
+                        class="btn btn-outline-info btn-sm mb-2 atc">
+                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+<!-- This block of code sets up the paginator links at the bottom of the page.
+    It has been styled using the Bootstrap paginator classes. -->
+<div class="row d-flex justify-content-center">
+<nav>
+    <ul class="pagination">
+        {% if product_objects.has_previous %}
+            <li class="page-item ">
+                <a class="page-link" href="?page=1">First</a>
+            </li>
+            <li class="page-item ">
+                <a class="page-link" href="?page={{ product_objects.previous_page_number }}">
+                    Previous
+                </a>
+            </li>
+        {% endif %}
+        <li class="page-item disabled">
+            <a href="#" class="page-link bg-secondary text-warning font-weight-bold">
+                Page {{ product_objects.number }} of {{ product_objects.paginator.num_pages }}
+            </a>
+        </li>
+        {% if product_objects.has_next %}
+            <li class="page-item">
+                <a class="page-link"
+                    href="?page={{ product_objects.next_page_number }}">Next</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ product_objects.paginator.num_pages }}">
+                    Last
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+</div>
+{% endblock content %}

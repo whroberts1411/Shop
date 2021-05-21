@@ -1,0 +1,70 @@
+
+{% load static %}
+
+<nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+
+    <!-- Branding for the navbar - icon and company/website name, for example -->
+    <a class="navbar-brand" href="#"><img class="mylogo" src="{% static 'logo.png' %}"
+        alt="logo" /></a>
+    <span class="px-2 text-warning">Orinoco ~ The Online Store</span>
+
+     <!-- This is the button that's displayed for a narrow screen e.g. a smartphone. -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- This defines the navigation elements, as an unordered list. -->
+    <div class="collapse navbar-collapse" id="navbarMenu">
+        <!-- ml-auto shifts the menu items to the right of the bar (ml = margin-left) -->
+        <ul class="navbar-nav ml-auto"  >
+            {% if user.is_authenticated %}
+            <li class="nav-item" >
+                <a class="nav-link" href="{% url 'index' %}">Home</a>
+            </li>
+
+            <li class="nav-item">
+                <a id="cart" class="nav-link shopcart"
+                data-toggle="popover"data-placement="bottom"
+                data-content="Bottom Popover"
+                data-html="true"
+                >Cart(0)</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link clear" >Clear</a>
+            </li>
+
+            <li class="nav-item" >
+                <a id="checkout" class="nav-link" href="{% url 'checkout' %}" >Checkout</a>
+            </li>
+
+            <li class="nav-item" >
+                <a id="orders" class="nav-link" href="{% url 'orders' %}" >Orders</a>
+            </li>
+            {% endif %}
+
+            <li class="nav-item dropdown ">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Account</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'login' %}" >Login</a>
+                    <a class="dropdown-item" href="{% url 'register' %}" >Signup</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}" >Logout</a>
+                </div>
+            </li>
+
+         </ul>
+
+        <!-- Add a search field and button at the end of the navbar -->
+        {% if user.is_authenticated %}
+         <form class="form-inline ml-auto">
+            <input type="search" name="item_name" class="form-control"
+                    placeholder="Search for Product" value="{{ item_name }}">
+            <button type="submit" class="btn btn-outline-info">
+                <i class="fas fa-search"></i></button>
+        </form>
+        {% endif %}
+    </div>
+
+</nav>
+
+<br><br><br>

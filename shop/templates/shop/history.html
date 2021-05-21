@@ -1,0 +1,44 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    Checkout
+{% endblock title %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container my-5">
+<h2 class="text-center text-info">Order Number : {{ order_ref }}</h2>
+<br><br>
+<table class="table table-sm ">
+    <thead class="bg-secondary text-warning">
+        <tr>
+            <td>Item</td>
+            <td>Unit Price</td>
+            <td>No. Ordered</td>
+            <td>Total Cost</td>
+            <td>Order Date</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in order %}
+        <tr>
+            <th scope="row">{{ item.item }}</th>
+            <td> {{ item.item.discount_price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.cost }}</td>
+            <td>{{ item.order.orderdate }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<br><br><br>
+<div class="row-hl d-flex justify-content-center">
+    <a href="{% url 'index' %}" class="btn btn-success clear">Back to Shop</a>
+</div>
+
+</div>
+{% endblock content %}

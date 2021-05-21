@@ -1,0 +1,45 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    Order History
+{% endblock title %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+<h2 class="text-center text-info mt-4 mb-4">Order History</h2>
+<table class="table table-sm table-striped">
+    <thead class="bg-secondary text-warning">
+        <tr>
+            <td class="text-center">Order Ref</td>
+            <td>Item</td>
+            <td class="text-right">Unit Price</td>
+            <td class="text-right">Quantity</td>
+            <td class="text-right">Total Cost</td>
+            <td class="text-center">Order Date</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in history %}
+        <tr>
+            <th scope="row" class="text-center">{{ item.order.id }}</th>
+            <td>{{ item.item }}</td>
+            <td class="text-right"> {{ item.item.discount_price }}</td>
+            <td class="text-right">{{ item.quantity }}</td>
+            <td class="text-right">{{ item.cost }}</td>
+            <td class="text-center">{{ item.order.orderdate|date:'d-m-Y H:i' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<br><br><br>
+<div class="row-hl d-flex justify-content-center">
+    <a href="{% url 'index' %}" class="btn btn-success clear">Back to Shop</a>
+</div>
+
+</div>
+{% endblock content %}

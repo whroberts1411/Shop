@@ -1,0 +1,44 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    Product Details
+{% endblock title %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="container mt-5">
+
+        <div class="row py-5">
+            <div class="col-md-6 mb-5">
+                <img src="{{ product_object.image }}" class="img-fluid">
+            </div>
+
+            <div class="col-md-6 pl-4"">
+                <h3 id="nm{{ product_object.id }}"class="text-info">{{ product_object.title}}</h3>
+
+                <p class="font-italic">Recommended price : £{{ product_object.price }}</p>
+
+                <p class="text-danger font-weight-bolder">
+                    Our price, only £
+                    <span id="price{{ product_object.id }}">{{ product_object.discount_price }}</span>
+                    (you save £{{ saving }})
+                </p>
+
+                <span>{{ product_object.description }}</span> <br>
+
+            </div>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+            <a href="/?page={{ page }}" class="btn btn-outline-success">
+                <i class="fas fa-arrow-circle-left"></i> Back to Products</a>
+            <a id="{{ product_object.id }}" class="btn btn-outline-success atc">
+                <i class="fas fa-cart-plus"></i> Add to Cart</a>
+         </div>
+
+    </div>
+
+{% endblock content %}

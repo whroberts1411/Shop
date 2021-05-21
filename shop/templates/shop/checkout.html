@@ -1,0 +1,119 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    Checkout
+{% endblock title %}
+
+{% load static %}
+
+{% block content %}
+
+
+<div class="container my-4">
+    <h2 class="text-info text-center mb-3">Your Shopping Basket</h2>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <ul class="list-group" id="item_list">
+                <!-- List items populated from javascript code below -->
+            </ul>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-10 offset-md-1">
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" id='items' name='items'>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="font-weight-bold" for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name"
+                            placeholder='Enter your full name' required=True
+                            value="{{ cust.name }}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="font-weight-bold" for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name='email'
+                        placeholder='name@somewhere.com' required=True
+                        value="{{ cust.email }}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="font-weight-bold" for="address">Address:</label>
+                        <input type="text" class="form-control" id="address" name='address'
+                        placeholder="Streetname and house number" required=True
+                        value="{{ cust.address }}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="font-weight-bold" for="district">District:</label>
+                        <input type="text" class="form-control" id="district" name='district'
+                        placeholder="District" value="{{ cust.district }}">
+                    </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label class="font-weight-bold" for="city">City:</label>
+                    <input type="text" class="form-control" id="city" name='city'
+                    placeholder="City" value="{{ cust.city }}">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label class="font-weight-bold" for="county">County:</label>
+                    <input type="text" class="form-control" id="county" name='county'
+                    placeholder="County"value="{{ cust.county }}">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="font-weight-bold" for="postcode">Postcode:</label>
+                    <input type="text" class="form-control" id="postcode" name='postcode'
+                    placeholder="Postcode" required=True value="{{ cust.postcode }}">
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-success mt-2">Place Order</button>
+              </form>
+        </div>
+    </div>
+
+   </div>
+
+{% endblock content %}
+
+{% block scripts %}
+
+<script>
+
+    if (localStorage.getItem('cart') == null) {
+        var cart = {};
+    }
+    else {
+        cart = JSON.parse(localStorage.getItem('cart'));
+    }
+
+    var total = 0;
+    var items = 0;
+
+    for (idx in cart) {
+        var quant = cart[idx][0];
+        var name = cart[idx][1];
+        var price = cart[idx][2];
+        total += price;
+        items += quant;
+
+        price = price.toFixed(2);
+        itemstr = `<li class="list-group-item d-flex justify-content-between align-items-center">`
+        itemstr += `${name} x ${quant}<span class="badge alert-warning text-primary">£${price}`
+        itemstr += `</span></li>`
+        $('#item_list').append(itemstr);
+    }
+    $('#items').val(JSON.stringify(cart));
+
+    total = total.toFixed(2);
+    itemstr = `<li class="list-group-item d-flex justify-content-between align-items-center  list-group-item-secondary text-danger font-weight-bolder">`
+    itemstr += `Total Items : ${items}<span class="badge bg-white text-danger">£${total}`
+    itemstr += `</span></li>`
+    $('#item_list').append(itemstr);
+
+</script>
+
+{% endblock scripts %}
